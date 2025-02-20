@@ -42,10 +42,16 @@ struct Book: Codable, Comparable {
 // MARK: - Book Inventory Management
 class BookInventory {
     private var books: [Book] = []
-    private let saveFile = "bookInventory.json"
+    private let saveFile: String
 
     init() {
+        // Get the current working directory
+        let currentDirectory = FileManager.default.currentDirectoryPath
+        saveFile = (currentDirectory as NSString).appendingPathComponent("bookInventory.json")
         loadInventory()
+
+        // Print the save location for debugging
+        print("Save file location: \(saveFile)")
     }
 
     private func loadInventory() {
@@ -168,6 +174,11 @@ class BookInventory {
                 print("\(index + 1). \(author.key) (\(author.value) books)")
             }
         }
+        // Print the save location for information purposes
+        print()
+        print("Save File Location")
+        print("==================")
+        print(saveFile)
     }
 
     func searchByISBN(_ isbn: String) {
